@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="pstyle.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script>
+        const validateForm = () => {
+        let isValid = true;
+    
+        if (names.value.trim() === '') {
+          isValid = false;
+          alert('Please enter your name.');
+        }
+    
+        if (mobile.value.trim() === '') {
+          isValid = false;
+          alert('Please enter your phone number.');
+        }
+    
+        if (bid.value.trim() === '') {
+          isValid = false;
+          alert('Please enter your email.');
+        }
+    
+        if (bname.value.trim() === '') {
+          isValid = false;
+          alert('Please enter your password.');
+        }
+    
+        if (pname.value.trim() === '') {
+          isValid = false;
+          alert('Please confirm your password.');
+        }
+    
+        return isValid;
+      };
+    
+      insert.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+    
+        if (validateForm()) {
+          var data = {
+            name: names.value,
+            mobile: mobile.value,
+            email: bid.value,
+            password: bname.value,
+            cpassword: pname.value,
+          };
+    
+          fetch('http://localhost:9000/api/books', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json; chatset=UTF-8',
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              result.innerText = JSON.stringify(res);
+            });
+        }
+      });
+     </script>
+   </head>
+<body>
+  <div class="container">
+    <div class="title">Sign up</div>
+    <div class="content">
+      <form action="#">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Name</span>
+            <input type="text" placeholder="Enter your name" id="name" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" placeholder="Enter your email" id="bid" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            <input type="text" placeholder="Enter your number" id="mo" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input type="text" placeholder="Enter your password" id="bname" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Confirm Password</span>
+            <input type="text" placeholder="Confirm your password" id="pname" required>
+          </div>
+        </div>
+        </div>    
+        <input type="submit" name="insert" value="insert" id="insert">
+      </form>
+    </div>    
+  </div>
+</body>
+<script>
+  const names = document.getElementById('name');
+  const mobile = document.getElementById('mo');
+  const bid = document.getElementById('bid');
+  const bname = document.getElementById('bname');
+  const pname = document.getElementById('pname');
+  const insert = document.getElementById('insert');
+  const result = document.getElementById('res')
+
+  insert.addEventListener('click',()=>{
+      var data = {
+        name:names.value,
+        mobile:mobile.value,
+          email: bid.value,
+          password: bname.value,
+          cpassword: pname.value,
+      }
+      fetch('http://localhost:9000/api/books',{
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json; chatset=UTF-8'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(res => {return res.json()})
+      .then(res => {result.innerText = JSON.stringify(res)});
+
+  })
+</script>
+</html>
